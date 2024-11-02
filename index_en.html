@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,28 +8,28 @@
 </head>
 <body>
     <div class="language-switcher">
-        <img id="language-flag" src="images/france.webp" alt="Changer de langue">
+        <img id="language-flag" src="images/uk.webp" alt="Changer de langue">
     </div>
     <div class="menu">
-        <h1>Importer un fichier CSV</h1>
+        <h1>Import a CSV file</h1>
         <form id="csvForm">
             <input type="file" id="csvFile" accept=".csv">
-            <button type="submit">Importer</button>
+            <button type="submit">Import</button>
         </form>
     </div>
     <script src="scripts/index.js"></script>
     <script>
         const languageFlag = document.getElementById('language-flag');
-        let currentLanguage = 'fr';
+        let currentLanguage = 'en';
 
         languageFlag.addEventListener('click', () => {
-            if (currentLanguage === 'fr') {
+            if (currentLanguage === 'en') {
+                currentLanguage = 'fr';
+                languageFlag.src = 'images/fr.webp';
+                window.location.href = 'index.html';
+            } else {
                 currentLanguage = 'en';
                 languageFlag.src = 'images/uk.webp';
-                window.location.href = 'index_en.html';
-            } else {
-                currentLanguage = 'fr';
-                languageFlag.src = 'images/france.webp';
             }
         });
     </script>

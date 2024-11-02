@@ -33,6 +33,36 @@ document.getElementById('toggle-button').addEventListener('click', function() {
         case 'section_cinq_inverse':
             targetPage = 'section_cinq.html';
             break;
+        case 'section_un_en':
+            targetPage = 'section_un_inverse_en.html';
+            break;
+        case 'section_un_inverse_en':
+            targetPage = 'section_un_en.html';
+            break;
+        case 'section_deux_en':
+            targetPage = 'section_deux_inverse_en.html';
+            break;
+        case 'section_deux_inverse_en':
+            targetPage = 'section_deux_en.html';
+            break;
+        case 'section_trois_en':
+            targetPage = 'section_trois_inverse_en.html';
+            break;
+        case 'section_trois_inverse_en':
+            targetPage = 'section_trois_en.html';
+            break;
+        case 'section_quatre_en':
+            targetPage = 'section_quatre_inverse_en.html';
+            break;
+        case 'section_quatre_inverse_en':
+            targetPage = 'section_quatre_en.html';
+            break;
+        case 'section_cinq_en':
+            targetPage = 'section_cinq_inverse_en.html';
+            break;
+        case 'section_cinq_inverse_en':
+            targetPage = 'section_cinq_en.html';
+            break;
         default:
             console.error('Page inconnue');
             return;

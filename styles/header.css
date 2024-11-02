@@ -20,14 +20,19 @@ header .logo {
     margin-left: 20px;
 }
 
+header nav {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
 header nav ul {
     list-style: none;
     display: flex;
     justify-content: space-between;
-    gap: 200px;
+    gap: 150px;
     margin: 0;
     padding: 0;
-    width: 100%;
 }
 
 header nav ul li {
@@ -43,14 +48,6 @@ header nav ul li a {
 
 header nav ul li a:hover {
     text-decoration: underline;
-}
-
-#language-toggle {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    margin-right: 20px; /* Ajout de la marge à droite */
 }
 
 /* Media queries pour les petits écrans */
@@ -73,13 +70,6 @@ header nav ul li a:hover {
 
     header nav ul li a {
         font-size: 25px;
-    }
-
-    #language-toggle {
-        width: 100%;
-        text-align: center;
-        margin-top: 10px;
-        margin-right: 0; /* Réinitialiser la marge à droite pour les petits écrans */
     }
 }
 

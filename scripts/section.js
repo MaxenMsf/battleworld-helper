@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Charger le header
-    fetch('header.html')
+    // Déterminer la langue de la page
+    const language = document.documentElement.lang || 'fr'; // Par défaut, français
+
+    // Charger le header en fonction de la langue
+    let headerFile = language === 'en' ? 'header_en.html' : 'header.html';
+    
+    fetch(headerFile)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Erreur lors du chargement du header.');
