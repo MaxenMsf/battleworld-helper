@@ -19,6 +19,8 @@ const titleElement7 = document.querySelector('#g19 h2');
 const spanElement7 = titleElement7.querySelector('.arrow');
 const titleElement8 = document.querySelector('#one-diamond h2');
 const spanElement8 = titleElement8.querySelector('.arrow');
+const legendTitle = document.querySelector('.legend h3');
+const legendItems = document.querySelectorAll('.legend li');
 
 if (lang === 'en') {
     titleElement1.childNodes[0].textContent = '3 Yellow Stars';
@@ -37,6 +39,9 @@ if (lang === 'en') {
     spanElement7.textContent = '▼';
     titleElement8.childNodes[0].textContent = '1 Diamond';
     spanElement8.textContent = '▼';
+    legendTitle.textContent = 'Legend of character background colors';
+    legendItems[0].innerHTML = '<span class="legend-color" style="background-color: lightgreen;"></span> Character with no node restrictions, can be placed in spec-ops without issues.';
+    legendItems[1].innerHTML = '<span class="legend-color" style="background-color: orange;"></span> Character recommended for nodes, be careful before placing them in spec-ops.';
 }
 
 // Met à jour le texte du bouton
