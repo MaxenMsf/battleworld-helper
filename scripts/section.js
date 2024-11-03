@@ -1,25 +1,29 @@
-document.addEventListener('DOMContentLoaded', function() {
+function loadData() {
     // Déterminer la langue de la page
     const language = document.documentElement.lang || 'fr';
     const headerFile = 'header.html';
 
-    // Charger le header en fonction de la langue
     fetch(headerFile)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erreur lors du chargement du header.');
-            }
-            return response.text();
-        })
-        .then(data => {
-            document.getElementById('header-placeholder').innerHTML = data;
-        })
-        .catch(error => {
-            console.error('Erreur:', error);
-        });
-
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erreur lors du chargement du header.');
+        }
+        return response.text();
+    })
+    .then(data => {
+        document.getElementById('header-placeholder').innerHTML = data;
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+    });
+    
     const csvData = localStorage.getItem('csvData');
     if (csvData) {
+        // Nettoyer les données existantes
+        document.querySelectorAll('.players').forEach(div => {
+            div.innerHTML = '';
+        });
+
         const rows = csvData.split('\n').slice(1); // Skip header row
         const characterMapping = {
             'OldManLogan': 'old-man-logan',
@@ -120,12 +124,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const [name, characterId, , power, stars, redStars, gearTier] = row.split(',');
             const formattedCharacterId = characterMapping[characterId.trim()];
             
-            // Assure que chaque personnage pour chaque joueur est enregistré avec sa puissance
             if (!playersData[formattedCharacterId]) {
                 playersData[formattedCharacterId] = [];
             }
 
-            // Ajouter les données du joueur pour le personnage avec puissance
             playersData[formattedCharacterId].push({
                 name: name,
                 power: parseValue(power),
@@ -141,14 +143,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 const characterDiv = document.querySelector(`#${sectionId} #${characterId}`);
                 if (!characterDiv) return;
 
-                // Filtrer et trier les joueurs par puissance décroissante
                 const eligiblePlayers = playersData[characterId]
                     .filter(player => player.stars >= starThreshold &&
-                                      player.redStars >= redStarThreshold &&
-                                      player.gearTier >= gearTierThreshold)
+                                    player.redStars >= redStarThreshold &&
+                                    player.gearTier >= gearTierThreshold)
                     .sort((a, b) => b.power - a.power);
 
-                // Ajouter les joueurs triés dans le DOM
                 eligiblePlayers.forEach(player => {
                     const playerDiv = document.createElement('div');
                     playerDiv.className = 'player';
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Appeler displayPlayers pour chaque section avec les critères respectifs
+        // Appeler displayPlayers pour chaque section
         displayPlayers('three-stars', 3);
         displayPlayers('five-stars', 5);
         displayPlayers('seven-stars', 7);
@@ -226,21 +226,10 @@ document.addEventListener('DOMContentLoaded', function() {
         displayPlayers('six-red-stars', 6, 6);
         displayPlayers('g19', 0, 0, 19);
         displayPlayers('one-diamond', 7, 8);
-
-        document.querySelectorAll('.section h2').forEach(h2 => {
-            h2.addEventListener('click', function() {
-                const section = this.parentElement;
-                const charactersDiv = section.querySelector('.characters');
-                if (charactersDiv.style.display === 'none') {
-                    charactersDiv.style.display = 'flex';
-                    this.querySelector('.arrow').textContent = '▼';
-                } else {
-                    charactersDiv.style.display = 'none';
-                    this.querySelector('.arrow').textContent = '►';
-                }
-            });
-        });
     } else {
         alert('Aucune donnée CSV trouvée. Veuillez retourner au menu et importer un fichier CSV.');
     }
-});
+}
+
+// Appeler loadData au chargement initial
+document.addEventListener('DOMContentLoaded', loadData);

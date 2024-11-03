@@ -1,8 +1,7 @@
-document.addEventListener('DOMContentLoaded', function() {
+function loadData() {
     const language = document.documentElement.lang || 'fr';
     const headerFile = 'header.html';
-
-    // Définir les traductions pour chaque langue
+    
     const translations = {
         fr: {
             stars: "étoiles",
@@ -22,26 +21,30 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Charger le header en fonction de la langue
     fetch(headerFile)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erreur lors du chargement du header.');
-            }
-            return response.text();
-        })
-        .then(data => {
-            document.getElementById('header-placeholder').innerHTML = data;
-        })
-        .catch(error => {
-            console.error('Erreur:', error);
-        });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erreur lors du chargement du header.');
+        }
+        return response.text();
+    })
+    .then(data => {
+        document.getElementById('header-placeholder').innerHTML = data;
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+    });
 
     const csvData = localStorage.getItem('csvData');
     if (csvData) {
-        const rows = csvData.split('\n').slice(1); // Skip header row
+        // Nettoyer les données existantes
+        document.querySelectorAll('.players').forEach(div => {
+            div.innerHTML = '';
+        });
+
+        const rows = csvData.split('\n').slice(1);
         const characterMapping = {
-            'OldManLogan': 'old-man-logan',
+           'OldManLogan': 'old-man-logan',
             'HankPym': 'hank-pym',
             'Sasquatch': 'sasquach',
             'Guardian': 'guardian',
@@ -263,4 +266,4 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         alert('Aucune donnée CSV trouvée. Veuillez retourner au menu et importer un fichier CSV.');
     }
-});
+}

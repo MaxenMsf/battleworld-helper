@@ -1,4 +1,4 @@
-document.getElementById('toggle-button').addEventListener('click', function() {
+/*document.getElementById('toggle-button').addEventListener('click', function() {
     const currentPage = document.body.getAttribute('data-page');
 
     let targetPage = '';
@@ -38,4 +38,38 @@ document.getElementById('toggle-button').addEventListener('click', function() {
             return;
     }
     window.location.href = targetPage;
+}); */
+
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleButton = document.getElementById('toggle-button');
+    let isInverse = false;
+
+    toggleButton.addEventListener('click', function() {
+        isInverse = !isInverse;
+        const newScriptSrc = isInverse ? 'scripts/section_inverse.js' : 'scripts/section.js';
+
+        // Créer un nouveau script
+        const newScript = document.createElement('script');
+        newScript.id = 'info';
+        newScript.src = newScriptSrc;
+
+        // Remplacer l'ancien script par le nouveau
+        const oldScript = document.getElementById('info');
+        oldScript.parentNode.replaceChild(newScript, oldScript);
+
+        // Exécuter loadData() après le chargement du nouveau script
+        newScript.onload = function() {
+            if (typeof loadData === 'function') {
+                loadData();
+            }
+
+            // Ajouter ou supprimer l'attribut data-page
+            const body = document.body;
+            if (isInverse) {
+                body.setAttribute('data-page', 'inverse');
+            } else {
+                body.removeAttribute('data-page');
+            }
+        };
+    });
 });

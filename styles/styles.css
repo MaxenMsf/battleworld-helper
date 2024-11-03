@@ -111,6 +111,10 @@ body[data-page*="inverse"] .player {
     background-color: lightgreen;
 }
 
+.recommend {
+    background-color: orange ;
+}
+
 @media (max-width: 600px) {
     .character {
         flex: 1 1 calc(50% - 10px);
