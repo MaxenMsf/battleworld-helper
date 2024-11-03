@@ -55,6 +55,7 @@ header nav ul li a:hover {
     header {
         flex-direction: column;
         align-items: flex-start;
+        padding: 5px 10px; /* Réduire le padding */
     }
 
     header .logo {
@@ -63,9 +64,11 @@ header nav ul li a:hover {
     }
 
     header nav ul {
-        flex-direction: column;
-        gap: 20px;
-        width: auto;
+        flex-direction: row; /* Conserver la disposition en ligne */
+        flex-wrap: wrap; /* Permettre le retour à la ligne */
+        gap: 10px; /* Réduire l'écart entre les éléments */
+        width: 100%; /* Utiliser toute la largeur disponible */
+        justify-content: center; /* Centrer les éléments */
     }
 
     header nav ul li a {
@@ -75,11 +78,15 @@ header nav ul li a:hover {
 
 @media (max-width: 480px) {
     header {
-        padding: 10px;
+        padding: 2px 5px; /* Réduire encore le padding */
     }
 
     header .logo {
         height: 40px;
+    }
+
+    header nav ul {
+        gap: 5px; /* Réduire l'écart entre les éléments de navigation */
     }
 
     header nav ul li a {
