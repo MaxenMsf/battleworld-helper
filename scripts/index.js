@@ -10,7 +10,7 @@ document.getElementById('csvForm').addEventListener('submit', function(event) {
             const csvData = e.target.result;
             localStorage.setItem('csvData', csvData);
             if (lang === 'en') {
-                window.location.href = 'menu_en.html';
+                window.location.href = 'menu.html';
             } else {
                 window.location.href = 'menu.html';
             }

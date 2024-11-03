@@ -19,17 +19,27 @@
     </div>
     <script src="scripts/index.js"></script>
     <script>
+        // On définit la langue actuelle à partir du localStorage ou par défaut à 'fr'
+        let currentLanguage = localStorage.getItem('language') || 'fr';
+
         const languageFlag = document.getElementById('language-flag');
-        let currentLanguage = 'fr';
+
+        // Met à jour l'icône du drapeau en fonction de la langue
+        if (currentLanguage === 'en') {
+            languageFlag.src = 'images/uk.webp';
+        }
 
         languageFlag.addEventListener('click', () => {
             if (currentLanguage === 'fr') {
                 currentLanguage = 'en';
                 languageFlag.src = 'images/uk.webp';
+                localStorage.setItem('language', 'en'); // Enregistre la langue choisie
                 window.location.href = 'index_en.html';
             } else {
                 currentLanguage = 'fr';
                 languageFlag.src = 'images/france.webp';
+                localStorage.setItem('language', 'fr'); // Enregistre la langue choisie
+                window.location.href = 'index.html';
             }
         });
     </script>

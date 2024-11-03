@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const language = document.documentElement.lang || 'fr';
-    const headerFile = language === 'en' ? 'header_en.html' : 'header.html';
+    const headerFile = 'header.html';
 
     // Définir les traductions pour chaque langue
     const translations = {

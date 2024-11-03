@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="language-switcher">
-        <img id="language-flag" src="images/uk.webp" alt="Changer de langue">
+        <img id="language-flag" src="images/uk.webp" alt="Change Language">
     </div>
     <div class="menu">
         <h1>Import a CSV file</h1>
@@ -19,17 +19,27 @@
     </div>
     <script src="scripts/index.js"></script>
     <script>
+        // On définit la langue actuelle à partir du localStorage ou par défaut à 'en'
+        let currentLanguage = localStorage.getItem('language') || 'en';
+
         const languageFlag = document.getElementById('language-flag');
-        let currentLanguage = 'en';
+
+        // Met à jour l'icône du drapeau en fonction de la langue
+        if (currentLanguage === 'fr') {
+            languageFlag.src = 'images/france.webp';
+        }
 
         languageFlag.addEventListener('click', () => {
             if (currentLanguage === 'en') {
                 currentLanguage = 'fr';
-                languageFlag.src = 'images/fr.webp';
+                languageFlag.src = 'images/france.webp';
+                localStorage.setItem('language', 'fr'); // Enregistre la langue choisie
                 window.location.href = 'index.html';
             } else {
                 currentLanguage = 'en';
                 languageFlag.src = 'images/uk.webp';
+                localStorage.setItem('language', 'en'); // Enregistre la langue choisie
+                window.location.href = 'index_en.html';
             }
         });
     </script>

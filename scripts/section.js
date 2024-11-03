@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Déterminer la langue de la page
     const language = document.documentElement.lang || 'fr';
-    const headerFile = language === 'en' ? 'header_en.html' : 'header.html';
+    const headerFile = 'header.html';
 
     // Charger le header en fonction de la langue
     fetch(headerFile)
