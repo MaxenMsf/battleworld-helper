@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Déterminer la langue de la page
-    const language = document.documentElement.lang || 'fr'; // Par défaut, français
+    const language = document.documentElement.lang || 'fr';
+    const headerFile = language === 'en' ? 'header_en.html' : 'header.html';
 
     // Charger le header en fonction de la langue
-    let headerFile = language === 'en' ? 'header_en.html' : 'header.html';
-    
     fetch(headerFile)
         .then(response => {
             if (!response.ok) {
@@ -114,119 +113,62 @@ document.addEventListener('DOMContentLoaded', function() {
             return value.trim() === '' ? 0 : parseInt(value);
         }
 
-        rows.forEach(row => {
-            const [name, characterId, , , stars] = row.split(',');
-            const formattedCharacterId = characterMapping[characterId.trim()];
-            if (parseValue(stars) >= 3 && formattedCharacterId) {
-                const characterDiv = document.querySelector(`#three-stars #${formattedCharacterId}`);
-                if (characterDiv) {
-                    const playerDiv = document.createElement('div');
-                    playerDiv.className = 'player';
-                    playerDiv.textContent = name;
-                    characterDiv.querySelector('.players').appendChild(playerDiv);
-                }
-            }
-        });
+        // Initialisation des données des personnages
+        const playersData = {};
 
         rows.forEach(row => {
-            const [name, characterId, , , stars] = row.split(',');
+            const [name, characterId, , power, stars, redStars, gearTier] = row.split(',');
             const formattedCharacterId = characterMapping[characterId.trim()];
-            if (parseValue(stars) >= 5 && formattedCharacterId) {
-                const characterDiv = document.querySelector(`#five-stars #${formattedCharacterId}`);
-                if (characterDiv) {
-                    const playerDiv = document.createElement('div');
-                    playerDiv.className = 'player';
-                    playerDiv.textContent = name;
-                    characterDiv.querySelector('.players').appendChild(playerDiv);
-                }
+            
+            // Assure que chaque personnage pour chaque joueur est enregistré avec sa puissance
+            if (!playersData[formattedCharacterId]) {
+                playersData[formattedCharacterId] = [];
             }
+
+            // Ajouter les données du joueur pour le personnage avec puissance
+            playersData[formattedCharacterId].push({
+                name: name,
+                power: parseValue(power),
+                stars: parseValue(stars),
+                redStars: parseValue(redStars),
+                gearTier: parseValue(gearTier)
+            });
         });
 
-        rows.forEach(row => {
-            const [name, characterId, , , stars] = row.split(',');
-            const formattedCharacterId = characterMapping[characterId.trim()];
-            if (parseValue(stars) >= 7 && formattedCharacterId) {
-                const characterDiv = document.querySelector(`#seven-stars #${formattedCharacterId}`);
-                if (characterDiv) {
+        // Fonction d'affichage des joueurs triés
+        function displayPlayers(sectionId, starThreshold, redStarThreshold = 0, gearTierThreshold = 0) {
+            Object.keys(playersData).forEach(characterId => {
+                const characterDiv = document.querySelector(`#${sectionId} #${characterId}`);
+                if (!characterDiv) return;
+
+                // Filtrer et trier les joueurs par puissance décroissante
+                const eligiblePlayers = playersData[characterId]
+                    .filter(player => player.stars >= starThreshold &&
+                                      player.redStars >= redStarThreshold &&
+                                      player.gearTier >= gearTierThreshold)
+                    .sort((a, b) => b.power - a.power);
+
+                // Ajouter les joueurs triés dans le DOM
+                eligiblePlayers.forEach(player => {
                     const playerDiv = document.createElement('div');
                     playerDiv.className = 'player';
-                    playerDiv.textContent = name;
+                    playerDiv.textContent = `${player.name} (${player.power})`;
                     characterDiv.querySelector('.players').appendChild(playerDiv);
-                }
-            }
-        });
+                });
+            });
+        }
 
-        rows.forEach(row => {
-            const [name, characterId, , , , , gearTier] = row.split(',');
-            const formattedCharacterId = characterMapping[characterId.trim()];
-            if (parseValue(gearTier) >= 15 && formattedCharacterId) {
-                const characterDiv = document.querySelector(`#g15 #${formattedCharacterId}`);
-                if (characterDiv) {
-                    const playerDiv = document.createElement('div');
-                    playerDiv.className = 'player';
-                    playerDiv.textContent = name;
-                    characterDiv.querySelector('.players').appendChild(playerDiv);
-                }
-            }
-        });
+        // Appeler displayPlayers pour chaque section avec les critères respectifs
+        displayPlayers('three-stars', 3);
+        displayPlayers('five-stars', 5);
+        displayPlayers('seven-stars', 7);
+        displayPlayers('g15', 0, 0, 15);
+        displayPlayers('g17', 0, 0, 17);
+        displayPlayers('six-red-stars', 6, 6);
+        displayPlayers('g19', 0, 0, 19);
+        displayPlayers('one-diamond', 7, 8);
 
-        rows.forEach(row => {
-            const [name, characterId, , , , , gearTier] = row.split(',');
-            const formattedCharacterId = characterMapping[characterId.trim()];
-            if (parseValue(gearTier) >= 17 && formattedCharacterId) {
-                const characterDiv = document.querySelector(`#g17 #${formattedCharacterId}`);
-                if (characterDiv) {
-                    const playerDiv = document.createElement('div');
-                    playerDiv.className = 'player';
-                    playerDiv.textContent = name;
-                    characterDiv.querySelector('.players').appendChild(playerDiv);
-                }
-            }
-        });
-
-        rows.forEach(row => {
-            const [name, characterId, , , stars, redStars] = row.split(',');
-            const formattedCharacterId = characterMapping[characterId.trim()];
-            if (parseValue(stars) >= 6 && parseInt(redStars) >= 6 && formattedCharacterId) {
-                const characterDiv = document.querySelector(`#six-red-stars #${formattedCharacterId}`);
-                if (characterDiv) {
-                    const playerDiv = document.createElement('div');
-                    playerDiv.className = 'player';
-                    playerDiv.textContent = name;
-                    characterDiv.querySelector('.players').appendChild(playerDiv);
-                }
-            }
-        });
-
-        rows.forEach(row => {
-            const [name, characterId, , , , , gearTier] = row.split(',');
-            const formattedCharacterId = characterMapping[characterId.trim()];
-            if (parseValue(gearTier) >= 19 && formattedCharacterId) {
-                const characterDiv = document.querySelector(`#g19 #${formattedCharacterId}`);
-                if (characterDiv) {
-                    const playerDiv = document.createElement('div');
-                    playerDiv.className = 'player';
-                    playerDiv.textContent = name;
-                    characterDiv.querySelector('.players').appendChild(playerDiv);
-                }
-            }
-        });
-
-        rows.forEach(row => {
-            const [name, characterId, , , stars, redStars] = row.split(',');
-            const formattedCharacterId = characterMapping[characterId.trim()];
-            if (parseValue(stars) >= 7 && parseInt(redStars) >= 8 && formattedCharacterId) {
-                const characterDiv = document.querySelector(`#one-diamond #${formattedCharacterId}`);
-                if (characterDiv) {
-                    const playerDiv = document.createElement('div');
-                    playerDiv.className = 'player';
-                    playerDiv.textContent = name;
-                    characterDiv.querySelector('.players').appendChild(playerDiv);
-                }
-            }
-        });
-
-         document.querySelectorAll('.section h2').forEach(h2 => {
+        document.querySelectorAll('.section h2').forEach(h2 => {
             h2.addEventListener('click', function() {
                 const section = this.parentElement;
                 const charactersDiv = section.querySelector('.characters');

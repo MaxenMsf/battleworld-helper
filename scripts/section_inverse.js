@@ -1,10 +1,28 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Déterminer la langue de la page
-    const language = document.documentElement.lang || 'fr'; // Par défaut, français
+    const language = document.documentElement.lang || 'fr';
+    const headerFile = language === 'en' ? 'header_en.html' : 'header.html';
+
+    // Définir les traductions pour chaque langue
+    const translations = {
+        fr: {
+            stars: "étoiles",
+            redStars: "étoiles rouges",
+            gearTier: "paliers",
+            diamond: "diamant",
+            diamonds: "diamants",
+            missing: "manque"
+        },
+        en: {
+            stars: "stars",
+            redStars: "red stars",
+            gearTier: "gear levels",
+            diamond: "diamond",
+            diamonds: "diamonds",
+            missing: "missing"
+        }
+    };
 
     // Charger le header en fonction de la langue
-    let headerFile = language === 'en' ? 'header_en.html' : 'header.html';
-    
     fetch(headerFile)
         .then(response => {
             if (!response.ok) {
@@ -131,97 +149,105 @@ document.addEventListener('DOMContentLoaded', function() {
             };
         });
 
-        // Vérification pour chaque personnage, même ceux qui ne sont pas dans les données CSV du joueur
-        Object.keys(players).forEach(name => {
+        // Fonction pour ajouter et trier les joueurs par nombre d'éléments manquants
+        function addAndSortPlayers(sectionId, threshold, key, unitKey) {
+            const unit = translations[language][unitKey];
+
             Object.keys(characterMapping).forEach(characterId => {
                 const formattedCharacterId = characterMapping[characterId];
-                const playerData = players[name][characterId] || { stars: 0, redStars: 0, gearTier: 0 };
+                const characterDiv = document.querySelector(`#${sectionId} #${formattedCharacterId}`);
+                if (!characterDiv) return;
 
-                // Ajoute les joueurs ne remplissant pas les conditions dans la section correspondante
-                if (playerData.stars < 3) {
-                    const characterDiv = document.querySelector(`#three-stars #${formattedCharacterId}`);
-                    if (characterDiv) {
-                        const playerDiv = document.createElement('div');
-                        playerDiv.className = 'player';
-                        playerDiv.textContent = name;
-                        characterDiv.querySelector('.players').appendChild(playerDiv);
-                    }
-                }
+                // Collecte des données de joueurs manquants pour le tri
+                const missingData = [];
 
-                if (playerData.stars < 5) {
-                    const characterDiv = document.querySelector(`#five-stars #${formattedCharacterId}`);
-                    if (characterDiv) {
-                        const playerDiv = document.createElement('div');
-                        playerDiv.className = 'player';
-                        playerDiv.textContent = name;
-                        characterDiv.querySelector('.players').appendChild(playerDiv);
+                Object.keys(players).forEach(name => {
+                    const playerData = players[name][characterId] || { stars: 0, redStars: 0, gearTier: 0 };
+                    const missing = threshold - playerData[key];
+                    
+                    if (missing > 0) {
+                        missingData.push({
+                            name: name,
+                            missing: missing,
+                            unit: unit
+                        });
                     }
-                }
+                });
 
-                if (playerData.stars < 7) {
-                    const characterDiv = document.querySelector(`#seven-stars #${formattedCharacterId}`);
-                    if (characterDiv) {
-                        const playerDiv = document.createElement('div');
-                        playerDiv.className = 'player';
-                        playerDiv.textContent = name;
-                        characterDiv.querySelector('.players').appendChild(playerDiv);
-                    }
-                }
+                // Trier par le nombre d'éléments manquants (du moins au plus)
+                missingData.sort((a, b) => a.missing - b.missing);
 
-                if (playerData.redStars < 6) {
-                    const characterDiv = document.querySelector(`#six-red-stars #${formattedCharacterId}`);
-                    if (characterDiv) {
-                        const playerDiv = document.createElement('div');
-                        playerDiv.className = 'player';
-                        playerDiv.textContent = name;
-                        characterDiv.querySelector('.players').appendChild(playerDiv);
-                    }
-                }
-
-                if (playerData.gearTier < 15) {
-                    const characterDiv = document.querySelector(`#g15 #${formattedCharacterId}`);
-                    if (characterDiv) {
-                        const playerDiv = document.createElement('div');
-                        playerDiv.className = 'player';
-                        playerDiv.textContent = name;
-                        characterDiv.querySelector('.players').appendChild(playerDiv);
-                    }
-                }
-
-                if (playerData.gearTier < 17) {
-                    const characterDiv = document.querySelector(`#g17 #${formattedCharacterId}`);
-                    if (characterDiv) {
-                        const playerDiv = document.createElement('div');
-                        playerDiv.className = 'player';
-                        playerDiv.textContent = name;
-                        characterDiv.querySelector('.players').appendChild(playerDiv);
-                    }
-                }
-
-                if (playerData.gearTier < 19) {
-                    const characterDiv = document.querySelector(`#g19 #${formattedCharacterId}`);
-                    if (characterDiv) {
-                        const playerDiv = document.createElement('div');
-                        playerDiv.className = 'player';
-                        playerDiv.textContent = name;
-                        characterDiv.querySelector('.players').appendChild(playerDiv);
-                    }
-                }
-
-                if (playerData.redStars < 8) {
-                    const characterDiv = document.querySelector(`#one-diamond #${formattedCharacterId}`);
-                    if (characterDiv) {
-                        const playerDiv = document.createElement('div');
-                        playerDiv.className = 'player';
-                        playerDiv.textContent = name;
-                        characterDiv.querySelector('.players').appendChild(playerDiv);
-                    }
-                }
+                // Ajouter les joueurs triés dans le DOM
+                missingData.forEach(data => {
+                    const playerDiv = document.createElement('div');
+                    playerDiv.className = 'player';
+                    playerDiv.textContent = `${data.name} (${translations[language].missing}: ${data.missing} ${data.unit})`;
+                    characterDiv.querySelector('.players').appendChild(playerDiv);
+                });
             });
-        });
+        }
 
+        // Fonction spéciale pour la section "Diamant" qui inclut étoiles rouges manquantes
+        function addAndSortPlayersForDiamond(sectionId) {
+            Object.keys(characterMapping).forEach(characterId => {
+                const formattedCharacterId = characterMapping[characterId];
+                const characterDiv = document.querySelector(`#${sectionId} #${formattedCharacterId}`);
+                if (!characterDiv) return;
 
-         document.querySelectorAll('.section h2').forEach(h2 => {
+                // Collecte des données de joueurs manquants pour le tri
+                const missingData = [];
+
+                Object.keys(players).forEach(name => {
+                    const playerData = players[name][characterId] || { stars: 0, redStars: 0, gearTier: 0 };
+                    const missingRedStars = 7 - playerData.redStars;
+
+                    // Vérifie s'il manque des étoiles rouges ou des diamants
+                    if (missingRedStars > 0) {
+                        const diamondUnit = missingRedStars > 1 ? translations[language].diamonds : translations[language].diamond;
+                        const text = `${missingRedStars} ${translations[language].redStars}`;
+                        missingData.push({
+                            name: name,
+                            missing: missingRedStars,
+                            displayText: text
+                        });
+                    }
+
+                    // Vérifie les cas où il a 7 étoiles rouges et donc manque un diamant
+                    if (playerData.redStars === 7) {
+                        const text = `1 ${translations[language].diamond}`;
+                        missingData.push({
+                            name: name,
+                            missing: 1,
+                            displayText: text
+                        });
+                    }
+                });
+
+                // Trier par le nombre d'étoiles rouges manquantes (du moins au plus)
+                missingData.sort((a, b) => a.missing - b.missing);
+
+                // Ajouter les joueurs triés dans le DOM
+                missingData.forEach(data => {
+                    const playerDiv = document.createElement('div');
+                    playerDiv.className = 'player';
+                    playerDiv.textContent = `${data.name} (${translations[language].missing}: ${data.displayText})`;
+                    characterDiv.querySelector('.players').appendChild(playerDiv);
+                });
+            });
+        }
+
+        // Appels pour chaque section avec les critères respectifs
+        addAndSortPlayers('three-stars', 3, 'stars', 'stars');
+        addAndSortPlayers('five-stars', 5, 'stars', 'stars');
+        addAndSortPlayers('seven-stars', 7, 'stars', 'stars');
+        addAndSortPlayers('six-red-stars', 6, 'redStars', 'redStars');
+        addAndSortPlayersForDiamond('one-diamond');
+        addAndSortPlayers('g15', 15, 'gearTier', 'gearTier');
+        addAndSortPlayers('g17', 17, 'gearTier', 'gearTier');
+        addAndSortPlayers('g19', 19, 'gearTier', 'gearTier');
+
+        // Basculer l'affichage des sections
+        document.querySelectorAll('.section h2').forEach(h2 => {
             h2.addEventListener('click', function() {
                 const section = this.parentElement;
                 const charactersDiv = section.querySelector('.characters');
