@@ -1,22 +1,25 @@
+document.addEventListener('DOMContentLoaded', loadData);
+
 function loadData() {
     // Déterminer la langue de la page
     const language = document.documentElement.lang || 'fr';
     const headerFile = 'header.html';
 
+    // Charger le fichier header
     fetch(headerFile)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Erreur lors du chargement du header.');
-        }
-        return response.text();
-    })
-    .then(data => {
-        document.getElementById('header-placeholder').innerHTML = data;
-    })
-    .catch(error => {
-        console.error('Erreur:', error);
-    });
-    
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erreur lors du chargement du header.');
+            }
+            return response.text();
+        })
+        .then(data => {
+            document.getElementById('header-placeholder').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+        });
+
     const csvData = localStorage.getItem('csvData');
     if (csvData) {
         // Nettoyer les données existantes
@@ -24,7 +27,7 @@ function loadData() {
             div.innerHTML = '';
         });
 
-        const rows = csvData.split('\n').slice(1); // Skip header row
+        const rows = csvData.split('\n').slice(1); // Ignorer la ligne d'en-tête
         const characterMapping = {
             'OldManLogan': 'old-man-logan',
             'HankPym': 'hank-pym',
@@ -117,13 +120,12 @@ function loadData() {
             return value.trim() === '' ? 0 : parseInt(value);
         }
 
-        // Initialisation des données des personnages
+        // Initialiser les données des personnages
         const playersData = {};
-
         rows.forEach(row => {
             const [name, characterId, , power, stars, redStars, gearTier] = row.split(',');
             const formattedCharacterId = characterMapping[characterId.trim()];
-            
+
             if (!playersData[formattedCharacterId]) {
                 playersData[formattedCharacterId] = [];
             }
@@ -137,79 +139,75 @@ function loadData() {
             });
         });
 
-        // Fonction d'affichage des joueurs triés
-        function displayPlayers(sectionId, starThreshold, redStarThreshold = 0, gearTierThreshold = 0) {
-            Object.keys(playersData).forEach(characterId => {
-                const characterDiv = document.querySelector(`#${sectionId} #${characterId}`);
-                if (!characterDiv) return;
-
-                const eligiblePlayers = playersData[characterId]
-                    .filter(player => player.stars >= starThreshold &&
-                                    player.redStars >= redStarThreshold &&
-                                    player.gearTier >= gearTierThreshold)
-                    .sort((a, b) => b.power - a.power);
-
-                eligiblePlayers.forEach(player => {
-                    const playerDiv = document.createElement('div');
-                    playerDiv.className = 'player';
-                    playerDiv.textContent = `${player.name} (${player.power})`;
-                    characterDiv.querySelector('.players').appendChild(playerDiv);
-                });
-            });
-        }
-
-        // Limite d'assignation des joueurs par personnage
-        const maxAssignedPlayers = 6;
+        // Structure pour suivre le nombre de personnages auxquels chaque joueur est assigné
+        const playerAssignmentCount = {};
         const assignedPlayersMap = {};
 
-        // Fonction d'affichage des joueurs triés
+        // Limites d'assignation
+        const maxAssignedPlayers = 6;
+        const maxAssignmentsPerPlayer = 10;
+
+        // Fonction pour mettre à jour le compteur d'assignations
+        function updatePlayerAssignmentCount(playerName, increment) {
+            if (!playerAssignmentCount[playerName]) {
+                playerAssignmentCount[playerName] = 0;
+            }
+            playerAssignmentCount[playerName] += increment;
+            return playerAssignmentCount[playerName];
+        }
+
+        // Fonction d'affichage des joueurs triés et gestion d'assignation
         function displayPlayers(sectionId, starThreshold, redStarThreshold = 0, gearTierThreshold = 0) {
             Object.keys(playersData).forEach(characterId => {
                 const characterDiv = document.querySelector(`#${sectionId} #${characterId}`);
                 if (!characterDiv) return;
 
-                // Filtrer et trier les joueurs par puissance décroissante
                 const eligiblePlayers = playersData[characterId]
                     .filter(player => player.stars >= starThreshold &&
                         player.redStars >= redStarThreshold &&
                         player.gearTier >= gearTierThreshold)
                     .sort((a, b) => b.power - a.power);
 
-                // Ajouter les joueurs triés dans le DOM
                 eligiblePlayers.forEach(player => {
                     const playerDiv = document.createElement('div');
                     playerDiv.className = 'player';
                     playerDiv.textContent = `${player.name} (${player.power})`;
                     
-                    // Ajouter un gestionnaire d'événements pour l'assignation
                     playerDiv.addEventListener('click', function () {
                         const assignedPlayers = assignedPlayersMap[characterId] || [];
-                        
+
                         // Vérifier si le joueur est déjà assigné
                         if (assignedPlayers.includes(player.name)) {
-                            // Désassigner le joueur
                             const index = assignedPlayers.indexOf(player.name);
                             if (index > -1) {
                                 assignedPlayers.splice(index, 1);
+                                updatePlayerAssignmentCount(player.name, -1); // Décrémenter le compteur global
                                 playerDiv.style.color = ''; // Réinitialiser la couleur
                                 playerDiv.style.marginTop = ''; // Réinitialiser le décalage
                             }
                         } else {
-                            // Vérifier si la limite est atteinte
-                            if (assignedPlayers.length < maxAssignedPlayers) {
-                                assignedPlayers.push(player.name);
-                                playerDiv.style.color = 'blue'; // Changer la couleur en bleu
-                                playerDiv.style.marginTop = '5px'; // Élever le joueur
+                            // Vérifier le nombre d'assignations global
+                            if (updatePlayerAssignmentCount(player.name, 0) < maxAssignmentsPerPlayer) {
+                                if (assignedPlayers.length < maxAssignedPlayers) {
+                                    assignedPlayers.push(player.name);
+                                    updatePlayerAssignmentCount(player.name, 1); // Incrémenter le compteur global
+                                    playerDiv.style.color = 'blue'; // Couleur bleue pour assignation
+                                    playerDiv.style.marginTop = '5px'; // Décalage vers le haut
+                                } else {
+                                    const alertMessage = language === 'en'
+                                        ? 'Limit of assigned players reached for this character.'
+                                        : 'Limite de joueurs assignés atteinte pour ce personnage.';
+                                    alert(alertMessage);
+                                }
                             } else {
                                 const alertMessage = language === 'en'
-                                ? 'Limit of assigned players reached for this character.'
-                                : 'Limite de joueurs assignés atteinte pour ce personnage.';
+                                    ? `Player ${player.name} cannot be assigned to more than ${maxAssignmentsPerPlayer} characters.`
+                                    : `Le joueur ${player.name} ne peut pas être assigné à plus de ${maxAssignmentsPerPlayer} personnages.`;
                                 alert(alertMessage);
                             }
                         }
 
-                        // Mettre à jour la carte d'assignation
-                        assignedPlayersMap[characterId] = assignedPlayers;
+                        assignedPlayersMap[characterId] = assignedPlayers; // Mettre à jour le map des joueurs assignés
                     });
 
                     characterDiv.querySelector('.players').appendChild(playerDiv);
@@ -217,7 +215,6 @@ function loadData() {
             });
         }
 
-        // Appeler displayPlayers pour chaque section
         displayPlayers('three-stars', 3);
         displayPlayers('five-stars', 5);
         displayPlayers('seven-stars', 7);
@@ -230,6 +227,3 @@ function loadData() {
         alert('Aucune donnée CSV trouvée. Veuillez retourner au menu et importer un fichier CSV.');
     }
 }
-
-// Appeler loadData au chargement initial
-document.addEventListener('DOMContentLoaded', loadData);
