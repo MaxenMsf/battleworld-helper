@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodes jour 2</title>
+    <link rel="stylesheet" href="styles/nodes.css">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <h1>Nodes jour 2</h1>
+    <div class="button-container">
+        <a href="section_deux.html" class="button">Revenir à la Section 2</a>
+    </div>
+    <h2>Node <em>Mercenaire</em> - Compte comme <em>guerre</em>  - Bonus pour <em>Mercenaire pour l'argent</em></h2>
+    <div id="powerTable1"></div>
+    
+    <h2>Node <em>Mondial & Super villain</em> - Compte comme <em>epreuve cosmique</em>  - Bonus pour <em>Cabale</em></h2>
+    <div id="powerTable2"></div>
+    
+    <h2>Node heraut<em>Mutant</em> - Compte comme <em>raid</em>  - Bonus pour <em>Division alpha</em></h2>
+    <div id="powerTable3"></div>
+
+    <script src="scripts/nodes.js"></script>
+    <script>
+        const charactersTable1 = {
+            recommended: ['old-man-logan', 'pandapool', 'deadpool',  'daken', 'deathpool'],
+            alternative: ['taskmaster', 'killmonger']
+        };
+
+        const charactersTable2 = {
+            recommended: ['iron-patriot', 'leader', 'namor', 'doom', 'ares'],
+            alternative: ['emma-frost', 'apocalypse', 'nimrod', 'sentinel', 'archangel']
+        };
+
+        const charactersTable3 = {
+            recommended: ['nightcrawler', 'forge', 'gambit', 'sunspot', 'cyclops'],
+            alternative: ['northstar', 'rogue', 'wolverine', 'sunfire', 'x23']
+        };
+
+        // Appel de la fonction pour générer les tableaux
+        generateTable('powerTable1', charactersTable1);
+        generateTable('powerTable2', charactersTable2);
+        generateTable('powerTable3', charactersTable3);
+    </script>
+</body>
+</html>

@@ -65,7 +65,34 @@ function generateTable(tableId, characters) {
         'odin': 'portraits/Portrait_Odin_c27c7498.png',
         'super-skrull': 'portraits/Portrait_SuperSkrull_472556f4.png',
         'dormammu': 'portraits/Portrait_Dormammu_50eb0f8e.png',
-        'kestrel': 'portraits/Portrait_Sybil_a08de12d.png'
+        'kestrel': 'portraits/Portrait_Sybil_a08de12d.png',
+        'old-man-logan': 'portraits/Portrait_OldManLogan_d9559148.png',
+        'pandapool': 'portraits/Portrait_PandaPool_78bd2983.png',
+        'deadpool': 'portraits/Portrait_Deadpool_445c42aa.png',
+        'deathpool': 'portraits/Portrait_Deathpool_da382246.png',
+        'daken': 'portraits/Portrait_Daken_fad050d8.png',
+        'taskmaster': 'portraits/Portrait_Taskmaster_157d5ccd.png',
+        'killmonger': 'portraits/Portrait_Killmonger_fa09de4d.png',
+        'iron-patriot': 'portraits/Portrait_IronPatriot_0b6c142a.png',
+        'leader': 'portraits/Portrait_TheLeader_ccdd254e.png',
+        'namor': 'portraits/Portrait_Namor_b4f49d32.png',
+        'doom': 'portraits/Portrait_Doom_64090095.png',
+        'ares': 'portraits/Portrait_Ares_d23d50ad.png',
+        'archangel': 'portraits/Portrait_Archangel_99737b98.png',
+        'emma-frost': 'portraits/Portrait_EmmaFrost_0d4c0489.png',
+        'apocalypse': 'portraits/Portrait_Apocalypse_a29770e5.png',
+        'nimrod': 'portraits/Portrait_Nimrod_144f1b34.png',
+        'sentinel': 'portraits/Portrait_Sentinel_c523c357.png',
+        'nightcrawler': 'portraits/Portrait_Nightcrawler_8fe6d4c5.png',
+        'forge': 'portraits/Portrait_Forge_da35924e.png',
+        'gambit': 'portraits/Portrait_Gambit_27e36668.png',
+        'sunspot': 'portraits/Portrait_Sunspot_c7fceb6f.png',
+        'cyclops': 'portraits/Portrait_Cyclops_ed14de8b.png',
+        'northstar': 'portraits/Portrait_Northstar_436fcd0c.png',
+        'rogue': 'portraits/Portrait_Rogue_1bdb8429.png',
+        'wolverine': 'portraits/Portrait_Wolverine_ee1eea4b.png',
+        'sunfire': 'portraits/Portrait_Sunfire_7c60daa6.png',
+        'x23': 'portraits/Portrait_X23_d15b6740.png',
     };
 
     const characterMapping = {
@@ -157,7 +184,10 @@ function generateTable(tableId, characters) {
         'Electro': 'electro',
         'Shocker': 'shocker',
         'Rhino': 'rhino',
-        'Sybil': 'kestrel'
+        'Sybil': 'kestrel',
+        'Taskmaster': 'taskmaster',
+        'Killmonger': 'killmonger',
+        'EmmaFrost': 'emma-frost'
     };
 
     function parseValue(value) {
