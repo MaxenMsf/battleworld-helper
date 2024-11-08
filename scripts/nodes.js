@@ -93,6 +93,20 @@ function generateTable(tableId, characters) {
         'wolverine': 'portraits/Portrait_Wolverine_ee1eea4b.png',
         'sunfire': 'portraits/Portrait_Sunfire_7c60daa6.png',
         'x23': 'portraits/Portrait_X23_d15b6740.png',
+        'captain-britain': 'portraits/Portrait_CaptainBritain_aa3df149.png',
+        'black-panther-shuri': 'portraits/Portrait_BlackPantherShuri_e4683ca6.png',
+        'hank-pym': 'portraits/Portrait_HankPym_19180045.png',
+        'black-bolt': 'portraits/Portrait_BlackBolt_f15fdce0.png',
+        'mister-fantastic': 'portraits/Portrait_MrFantastic_6cb887bf.png',
+        'iron-man': 'portraits/Portrait_IronMan_55dadf73.png',
+        'red-hulk': 'portraits/Portrait_RedHulk_f6d56863.png',
+        'black-knight': 'portraits/Portrait_BlackKnight_59cd0b2f.png',
+        'cosmic-ghost-rider': 'portraits/Portrait_CosmicGhostRider_5d1208ce.png',
+        'starbrand': 'portraits/Portrait_StarBrand_cdb6299a.png',
+        'captain-america': 'portraits/Portrait_CaptainAmerica_5d76161e.png',
+        'captain-carter': 'portraits/Portrait_CaptainCarter_30cd29b5.png',
+        'guardian': 'portraits/Portrait_Guardian_1aad8826.png',
+        'sasquach': 'portraits/Portrait_Sasquatch_d88fc5f8.png'
     };
 
     const characterMapping = {

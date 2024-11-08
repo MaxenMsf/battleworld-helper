@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodes jour 3</title>
+    <link rel="stylesheet" href="styles/nodes.css">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <h1>Nodes jour 3</h1>
+    <div class="button-container">
+        <a href="section_trois.html" class="button">Revenir à la Section 3</a>
+    </div>
+    <h2>Node <em>Bio/Mystique/Expertise</em> - Compte comme <em>arène</em>  - Bonus pour <em>Annhilateurs</em></h2>
+    <div id="powerTable1"></div>
+    
+    <h2>Node <em>Mondial/Epic/Légendaire</em> - Compte comme <em>epreuve cosmique</em>  - Bonus pour <em>Illuminati</em></h2>
+    <div id="powerTable2"></div>
+    
+    <h2>Node heraut <em>Héro et Mondial/Manipulateur</em> - Compte comme <em>guerre</em>  - Bonus pour <em>Hors du temps</em></h2>
+    <div id="powerTable3"></div>
+
+    <script src="scripts/nodes.js"></script>
+    <script>
+        const charactersTable1 = {
+            recommended: ['gladiator', 'gorr', 'thanos-endgame', 'ultimus', 'silver-surfer'],
+            alternative: ['black-cat', 'mephisto', 'odin', 'super-skrull', 'dormammu']
+        };
+
+        const charactersTable2 = {
+            recommended: ['captain-britain', 'black-panther-shuri', 'hank-pym', 'black-bolt', 'mister-fantastic'],
+            alternative: ['iron-man', 'iron-patriot', 'leader', 'namor', 'apocalypse']
+        };
+
+        const charactersTable3 = {
+            recommended: ['black-knight', 'cosmic-ghost-rider', 'starbrand', 'captain-america', 'captain-carter'],
+            alternative: ['northstar', 'guardian', 'wolverine', 'sunfire', 'sasquach']
+        };
+
+        // Appel de la fonction pour générer les tableaux
+        generateTable('powerTable1', charactersTable1);
+        generateTable('powerTable2', charactersTable2);
+        generateTable('powerTable3', charactersTable3);
+    </script>
+</body>
+</html>
