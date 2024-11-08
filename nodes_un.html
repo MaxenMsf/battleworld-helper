@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodes jour 1</title>
+    <link rel="stylesheet" href="styles/nodes.css">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <h1>Nodes jour 1</h1>
+    <div class="button-container">
+        <a href="section_un.html" class="button">Revenir à la Section 1</a>
+    </div>
+    <h2>Node <em>Ville</em> - Compte comme <em>épreuve cosmique</em>  - Bonus pour <em>Sinister Six</em></h2>
+    <div id="powerTable1"></div>
+    
+    <h2>Node <em>Spiderverse</em> - Compte comme <em>raid</em>  - Bonus pour <em>Société des araignées</em></h2>
+    <div id="powerTable2"></div>
+    
+    <h2>Node <em>Cosmique</em> - Compte comme <em>arène et raid</em>  - Bonus pour <em>Annihlateurs</em></h2>
+    <div id="powerTable3"></div>
+
+    <script src="scripts/nodes.js"></script>
+    <script>
+        const charactersTable1 = {
+            recommended: ['green-goblin-classic', 'doctor-octopus', 'lizard',  'kraven', 'spider-slayer'],
+            alternative: ['vulture', 'mysterio', 'shocker', 'rhino', 'electro']
+        };
+
+        const charactersTable2 = {
+            recommended: ['peter-b-parker', 'peni-parker', 'pavitr', 'ghost-spider', 'spider-man-noir'],
+            alternative: ['black-cat', 'gwenom', 'red-goblin', 'venom', 'carnage']
+        };
+
+        const charactersTable3 = {
+            recommended: ['gladiator', 'gorr', 'thanos-endgame', 'ultimus', 'silver-surfer'],
+            alternative: ['mephisto', 'odin', 'super-skrull', 'dormammu', 'kestrel']
+        };
+
+        // Appel de la fonction pour générer les tableaux
+        generateTable('powerTable1', charactersTable1);
+        generateTable('powerTable2', charactersTable2);
+        generateTable('powerTable3', charactersTable3);
+    </script>
+</body>
+</html>

@@ -113,7 +113,10 @@ function loadData() {
             'X23': 'x23',
             'RedHulk': 'red-hulk',
             'Odin': 'odin',
-            'GhostRiderRobbie': 'ghost-rider-robbie'
+            'GhostRiderRobbie': 'ghost-rider-robbie',
+            'Electro': 'electro',
+            'Shocker': 'shocker',
+            'Rhino': 'rhino'
         };
 
         function parseValue(value) {
@@ -206,14 +209,27 @@ function loadData() {
                                 alert(alertMessage);
                             }
                         }
-
                         assignedPlayersMap[characterId] = assignedPlayers; // Mettre à jour le map des joueurs assignés
                     });
-
                     characterDiv.querySelector('.players').appendChild(playerDiv);
                 });
             });
         }
+
+        // Basculer l'affichage des sections
+        document.querySelectorAll('.section h2').forEach(h2 => {
+            h2.addEventListener('click', function() {
+                const section = this.parentElement;
+                const charactersDiv = section.querySelector('.characters');
+                if (charactersDiv.style.display === 'none') {
+                    charactersDiv.style.display = 'flex';
+                    this.querySelector('.arrow').textContent = '▼';
+                } else {
+                    charactersDiv.style.display = 'none';
+                    this.querySelector('.arrow').textContent = '►';
+                }
+            });
+        });
 
         displayPlayers('three-stars', 3);
         displayPlayers('five-stars', 5);
