@@ -126,7 +126,8 @@ function generateTable(tableId, characters) {
         'oath': 'portraits/Portrait_Oath_8c79dde8.png',
         'moon-knight': 'portraits/Portrait_MoonKnight_e1a53b9a.png',
         'man-thing': 'portraits/Portrait_ManThing_cb08d2fb.png',
-        'ghost-rider-robbie': 'portraits/Portrait_GhostRiderRobbie_f078b789.png'
+        'ghost-rider-robbie': 'portraits/Portrait_GhostRiderRobbie_f078b789.png',
+        'agatha': 'portraits/Portrait_AgathaHarkness_ead1f20a.png'
     };
 
     const characterMapping = {
