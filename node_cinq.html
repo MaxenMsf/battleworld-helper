@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodes jour 5</title>
+    <link rel="stylesheet" href="styles/nodes.css">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <h1>Nodes jour 5</h1>
+    <div class="button-container">
+        <a href="section_cinq.html" class="button">Revenir à la Section 5</a>
+    </div>
+    <h2>Node <em>Ville ou Support</em> - Compte comme <em>raid</em>  - Bonus pour <em>Consience collective</em></h2>
+    <div id="powerTable1"></div>
+    
+    <h2>Node <em>Villain Techno</em> - Compte comme <em>raid</em>  - Bonus pour <em>Orchis</em></h2>
+    <div id="powerTable2"></div>
+    
+    <h2>Node heraut <em>Hero Mystique</em> - Compte comme <em>raid</em>  - Bonus pour <em>Nightstalkers</em></h2>
+    <div id="powerTable3"></div>
+
+    <script src="scripts/nodes.js"></script>
+    <script>
+        const charactersTable1 = {
+            recommended: ['void-knight', 'gwenom', 'red-goblin', 'venom', 'carnage'],
+            alternative: ['peter-b-parker', 'peni-parker', 'pavitr', 'ghost-spider', 'spider-man-noir']
+        };
+
+        const charactersTable2 = {
+            recommended: ['sentinel', 'nimrod', 'omega-sentinel', 'lady-deathstrike', 'scientist-supreme'],
+            alternative: ['green-goblin-classic', 'doom', 'doctor-octopus', 'vulture', 'kang']
+        };
+
+        const charactersTable3 = {
+            recommended: ['blade', 'oath', 'moon-knight', 'man-thing', 'deathpool'],
+            alternative: ['silver-surfer', 'captain-britain', 'black-panther-shuri', 'ghost-rider-robbie', 'spider-weaver']
+        };
+
+        // Appel de la fonction pour générer les tableaux
+        generateTable('powerTable1', charactersTable1);
+        generateTable('powerTable2', charactersTable2);
+        generateTable('powerTable3', charactersTable3);
+    </script>
+</body>
+</html>

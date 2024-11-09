@@ -106,7 +106,27 @@ function generateTable(tableId, characters) {
         'captain-america': 'portraits/Portrait_CaptainAmerica_5d76161e.png',
         'captain-carter': 'portraits/Portrait_CaptainCarter_30cd29b5.png',
         'guardian': 'portraits/Portrait_Guardian_1aad8826.png',
-        'sasquach': 'portraits/Portrait_Sasquatch_d88fc5f8.png'
+        'sasquach': 'portraits/Portrait_Sasquatch_d88fc5f8.png',
+        'hela': 'portraits/Portrait_Hela_f0604f02.png',
+        'zombie-juggernaut': 'portraits/Portrait_ZombieJuggernaut_94349e5b.png',
+        'zombie-scarlet-witch': 'portraits/Portrait_ZombieScarletWitch_6f076db0.png',
+        'zombie-iron-man': 'portraits/Portrait_ZombieIronMan_a7f95a4c.png',
+        'hulk': 'portraits/Portrait_Hulk_71f97638.png',
+        'brawn': 'portraits/Portrait_AmadeusCho_0c0fc9e1.png',
+        'abomination': 'portraits/Portrait_Abomination_d466494d.png',
+        'morgan-le-fay': 'portraits/Portrait_MorganLeFay_ae7d789d.png',
+        'vahl': 'portraits/Portrait_Vahl_f3b025f1.png',
+        'spider-weaver': 'portraits/Portrait_SpiderWeaver_b040589a.png',
+        'void-knight': 'portraits/Portrait_SymbioteSilverSurfer_16f4d84b.png',
+        'omega-sentinel': 'portraits/Portrait_OmegaSentinel_cbc7c0f5.png',
+        'scientist-supreme': 'portraits/Portrait_ScientistSupreme_344d789b.png',
+        'lady-deathstrike': 'portraits/Portrait_LadyDeathstrike_f9c5d837.png',
+        'kang': 'portraits/Portrait_KangTheConqueror_411ede1a.png',
+        'blade': 'portraits/Portrait_Blade_cea98c1c.png',
+        'oath': 'portraits/Portrait_Oath_8c79dde8.png',
+        'moon-knight': 'portraits/Portrait_MoonKnight_e1a53b9a.png',
+        'man-thing': 'portraits/Portrait_ManThing_cb08d2fb.png',
+        'ghost-rider-robbie': 'portraits/Portrait_GhostRiderRobbie_f078b789.png'
     };
 
     const characterMapping = {
@@ -201,7 +221,12 @@ function generateTable(tableId, characters) {
         'Sybil': 'kestrel',
         'Taskmaster': 'taskmaster',
         'Killmonger': 'killmonger',
-        'EmmaFrost': 'emma-frost'
+        'EmmaFrost': 'emma-frost',
+        'Hela': 'hela',
+        'Hulk': 'hulk',
+        'Abomination': 'abomination',
+        'AmadeusCho': 'brawn',
+        'SheHulk': 'she-hulk',
     };
 
     function parseValue(value) {

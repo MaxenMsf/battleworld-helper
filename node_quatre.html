@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodes jour 4</title>
+    <link rel="stylesheet" href="styles/nodes.css">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <h1>Nodes jour 4</h1>
+    <div class="button-container">
+        <a href="section_quatre.html" class="button">Revenir à la Section 4</a>
+    </div>
+    <h2>Node <em>X-men</em> - Compte comme <em>raid</em>  - Bonus pour <em>X-trem X-men</em></h2>
+    <div id="powerTable1"></div>
+    
+    <h2>Node <em>Bio/Asgard</em> - Compte comme <em>guerre</em>  - Bonus pour <em>Impérissable</em></h2>
+    <div id="powerTable2"></div>
+    
+    <h2>Node heraut <em>Original MSF/Cavaliers/Apocalypse</em> - Compte comme <em>guerre</em>  - Bonus pour <em>Original MSF</em></h2>
+    <div id="powerTable3"></div>
+
+    <script src="scripts/nodes.js"></script>
+    <script>
+        const charactersTable1 = {
+            recommended: ['nightcrawler', 'forge', 'gambit', 'sunspot', 'cyclops'],
+            alternative: ['wolverine', 'sunfire', 'old-man-logan', 'rogue', 'x23']
+        };
+
+        const charactersTable2 = {
+            recommended: ['odin', 'hela', 'zombie-iron-man', 'zombie-juggernaut', 'zombie-scarlet-witch'],
+            alternative: ['red-hulk', 'hulk', 'brawn', 'super-skrull', 'abomination']
+        };
+
+        const charactersTable3 = {
+            recommended: ['apocalypse', 'red-hulk', 'rogue', 'morgan-le-fay', 'archangel'],
+            alternative: ['vahl', 'deathpool', 'spider-weaver', 'kestrel']
+        };
+
+        // Appel de la fonction pour générer les tableaux
+        generateTable('powerTable1', charactersTable1);
+        generateTable('powerTable2', charactersTable2);
+        generateTable('powerTable3', charactersTable3);
+    </script>
+</body>
+</html>
