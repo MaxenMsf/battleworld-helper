@@ -147,8 +147,8 @@ function loadData() {
         const assignedPlayersMap = {};
 
         // Limites d'assignation
-        const maxAssignedPlayers = 6;
-        const maxAssignmentsPerPlayer = 10;
+        const maxAssignedPlayers = 5;
+        const maxAssignmentsPerPlayer = 12;
 
         // Fonction pour mettre à jour le compteur d'assignations
         function updatePlayerAssignmentCount(playerName, increment) {
