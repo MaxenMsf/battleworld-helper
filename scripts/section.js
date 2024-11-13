@@ -1,11 +1,9 @@
 document.addEventListener('DOMContentLoaded', loadData);
 
 function loadData() {
-    // Déterminer la langue de la page
     const language = document.documentElement.lang || 'fr';
     const headerFile = 'header.html';
 
-    // Charger le fichier header
     fetch(headerFile)
         .then(response => {
             if (!response.ok) {
@@ -22,12 +20,11 @@ function loadData() {
 
     const csvData = localStorage.getItem('csvData');
     if (csvData) {
-        // Nettoyer les données existantes
         document.querySelectorAll('.players').forEach(div => {
             div.innerHTML = '';
         });
 
-        const rows = csvData.split('\n').slice(1); // Ignorer la ligne d'en-tête
+        const rows = csvData.split('\n').slice(1);
         const characterMapping = {
             'OldManLogan': 'old-man-logan',
             'HankPym': 'hank-pym',
@@ -123,7 +120,6 @@ function loadData() {
             return value.trim() === '' ? 0 : parseInt(value);
         }
 
-        // Initialiser les données des personnages
         const playersData = {};
         rows.forEach(row => {
             const [name, characterId, , power, stars, redStars, gearTier] = row.split(',');
@@ -142,15 +138,20 @@ function loadData() {
             });
         });
 
-        // Structure pour suivre le nombre de personnages auxquels chaque joueur est assigné
+        // Restaurer l'état des joueurs assignés depuis localStorage
+        const savedAssignments = JSON.parse(localStorage.getItem('assignedPlayersMap')) || {};
         const playerAssignmentCount = {};
-        const assignedPlayersMap = {};
+        const assignedPlayersMap = savedAssignments;
 
-        // Limites d'assignation
+        Object.keys(assignedPlayersMap).forEach(characterId => {
+            assignedPlayersMap[characterId].forEach(playerName => {
+                updatePlayerAssignmentCount(playerName, 1);
+            });
+        });
+
         const maxAssignedPlayers = 5;
         const maxAssignmentsPerPlayer = 12;
 
-        // Fonction pour mettre à jour le compteur d'assignations
         function updatePlayerAssignmentCount(playerName, increment) {
             if (!playerAssignmentCount[playerName]) {
                 playerAssignmentCount[playerName] = 0;
@@ -159,7 +160,10 @@ function loadData() {
             return playerAssignmentCount[playerName];
         }
 
-        // Fonction d'affichage des joueurs triés et gestion d'assignation
+        function saveAssignmentsToLocalStorage() {
+            localStorage.setItem('assignedPlayersMap', JSON.stringify(assignedPlayersMap));
+        }
+
         function displayPlayers(sectionId, starThreshold, redStarThreshold = 0, gearTierThreshold = 0) {
             Object.keys(playersData).forEach(characterId => {
                 const characterDiv = document.querySelector(`#${sectionId} #${characterId}`);
@@ -175,27 +179,30 @@ function loadData() {
                     const playerDiv = document.createElement('div');
                     playerDiv.className = 'player';
                     playerDiv.textContent = `${player.name} (${player.power})`;
-                    
+
+                    if (assignedPlayersMap[characterId] && assignedPlayersMap[characterId].includes(player.name)) {
+                        playerDiv.style.color = 'blue';
+                        playerDiv.style.marginTop = '5px';
+                    }
+
                     playerDiv.addEventListener('click', function () {
                         const assignedPlayers = assignedPlayersMap[characterId] || [];
 
-                        // Vérifier si le joueur est déjà assigné
                         if (assignedPlayers.includes(player.name)) {
                             const index = assignedPlayers.indexOf(player.name);
                             if (index > -1) {
                                 assignedPlayers.splice(index, 1);
-                                updatePlayerAssignmentCount(player.name, -1); // Décrémenter le compteur global
-                                playerDiv.style.color = ''; // Réinitialiser la couleur
-                                playerDiv.style.marginTop = ''; // Réinitialiser le décalage
+                                updatePlayerAssignmentCount(player.name, -1);
+                                playerDiv.style.color = '';
+                                playerDiv.style.marginTop = '';
                             }
                         } else {
-                            // Vérifier le nombre d'assignations global
                             if (updatePlayerAssignmentCount(player.name, 0) < maxAssignmentsPerPlayer) {
                                 if (assignedPlayers.length < maxAssignedPlayers) {
                                     assignedPlayers.push(player.name);
-                                    updatePlayerAssignmentCount(player.name, 1); // Incrémenter le compteur global
-                                    playerDiv.style.color = 'blue'; // Couleur bleue pour assignation
-                                    playerDiv.style.marginTop = '5px'; // Décalage vers le haut
+                                    updatePlayerAssignmentCount(player.name, 1);
+                                    playerDiv.style.color = 'blue';
+                                    playerDiv.style.marginTop = '5px';
                                 } else {
                                     const alertMessage = language === 'en'
                                         ? 'Limit of assigned players reached for this character.'
@@ -209,14 +216,16 @@ function loadData() {
                                 alert(alertMessage);
                             }
                         }
-                        assignedPlayersMap[characterId] = assignedPlayers; // Mettre à jour le map des joueurs assignés
+
+                        assignedPlayersMap[characterId] = assignedPlayers;
+                        saveAssignmentsToLocalStorage();
                     });
+
                     characterDiv.querySelector('.players').appendChild(playerDiv);
                 });
             });
         }
 
-        // Basculer l'affichage des sections
         document.querySelectorAll('.section h2').forEach(h2 => {
             h2.addEventListener('click', function() {
                 const section = this.parentElement;
