@@ -56,3 +56,15 @@ body {
     height: 20px;
     cursor: pointer;
 }
+
+.styled-link {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+    display: block; /* Assure que le lien est un élément de bloc */
+    margin-bottom: 15px; /* Ajout de marge inférieure */
+}
+
+.styled-link:hover {
+    text-decoration: underline;
+}
